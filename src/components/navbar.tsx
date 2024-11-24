@@ -1,4 +1,3 @@
-
 import { Link } from "@nextui-org/link";
 import {
   Navbar as NextUINavbar,
@@ -13,7 +12,6 @@ import {
 import { ThemeSwitch } from "@/components/theme-switch";
 
 export const Navbar = () => {
-
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -24,6 +22,7 @@ export const Navbar = () => {
             href="/"
           >
             <img
+              alt="Crionet"
               height="40"
               src="https://crionet.com/wp-content/uploads/2022/12/crionetlogoteams200px.png"
             />
@@ -31,11 +30,7 @@ export const Navbar = () => {
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2 justify-between items-center">
           <NavbarItem key={"/"}>
-            <Link
-              href="/"
-            >
-              Home
-            </Link>
+            <Link href="/">Home</Link>
           </NavbarItem>
         </div>
       </NavbarContent>
@@ -57,10 +52,7 @@ export const Navbar = () => {
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           <NavbarMenuItem key={`${"/"}-${1}`}>
-            <Link
-              href="#"
-              size="lg"
-            >
+            <Link href="#" size="lg">
               Home
             </Link>
           </NavbarMenuItem>

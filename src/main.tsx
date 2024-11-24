@@ -1,14 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { Provider } from "./provider.tsx";
-import "@/styles/globals.css";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 
+import App from "./App.tsx";
+import { Provider } from "./provider.tsx";
+
+import "@/styles/globals.css";
 
 const client = new ApolloClient({
-  uri: `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?q=Paris&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
+  uri: "https://countries.trevorblades.com",
   cache: new InMemoryCache(),
 });
 

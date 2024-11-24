@@ -1,4 +1,4 @@
-# FRVR Ads campaigns Dashboard 
+# Countries Explorer Application with Weather Integration
 
 ## Technologies Used
 
@@ -11,6 +11,15 @@
 - [Jest](https://jestjs.io)
 
 ## How to Use
+
+### Go to
+
+```bash
+https://cors-anywhere.herokuapp.com/corsdemo
+```
+
+and press on "Request temporary access to the demo server"
+
 
 ### Install dependencies
 

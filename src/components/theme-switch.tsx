@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
-import { useTheme } from "@/hooks/use-theme";
-import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 import { Button } from "@nextui-org/react";
 
+import { useTheme } from "@/hooks/use-theme";
+import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 
 export const ThemeSwitch = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -19,15 +19,15 @@ export const ThemeSwitch = () => {
 
   return (
     <Button
-      aria-label={isLightTheme ? "Switch to dark mode" : "Switch to light mode"}
-      onPress={toggleTheme}
-      className={`px-2 py-1 transition-opacity hover:opacity-80 cursor-pointer rounded-lg`}
       isIconOnly
+      aria-label={isLightTheme ? "Switch to dark mode" : "Switch to light mode"}
+      className={`px-2 py-1 transition-opacity hover:opacity-80 cursor-pointer rounded-lg`}
+      onPress={toggleTheme}
     >
       {isLightTheme ? (
-        <MoonFilledIcon size={22} aria-hidden="true" />
+        <MoonFilledIcon aria-hidden="true" size={22} />
       ) : (
-        <SunFilledIcon size={22} aria-hidden="true" />
+        <SunFilledIcon aria-hidden="true" size={22} />
       )}
       <VisuallyHidden>
         {isLightTheme ? "Dark Mode" : "Light Mode"}
