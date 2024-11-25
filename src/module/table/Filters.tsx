@@ -5,14 +5,10 @@ import { CountryNameFilter } from "@/components/filters/CountryNameFilter";
 
 export default function Filters() {
     return (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <div className="md:col-span-2 lg:col-span-1">
+        <div className="w-full flex flex-row gap-4 items-center mb-5">
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-between">
                 <CountryNameFilter />
-            </div>
-            <div className="md:col-span-2 lg:col-span-1">
                 <LanguageFilter />
-            </div>
-            <div className="md:col-span-2 lg:col-span-1">
                 <RegionFilter />
             </div>
         </div>

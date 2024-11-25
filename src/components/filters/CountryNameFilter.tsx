@@ -11,6 +11,7 @@ export function CountryNameFilter() {
     return (
         <Autocomplete
             isClearable
+            className="max-w-sm"
             label="Search by country"
             placeholder="Search by country"
             onSelectionChange={(key) => setNameFilter(key)}

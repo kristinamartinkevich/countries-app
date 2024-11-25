@@ -8,6 +8,7 @@ export function RegionFilter() {
     return (
         <Autocomplete
             isClearable
+            className="max-w-sm"
             label="Filter by Region"
             placeholder="Select a region"
             onSelectionChange={(key) => setRegionFilter(key)}

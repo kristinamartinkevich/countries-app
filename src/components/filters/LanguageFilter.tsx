@@ -8,6 +8,7 @@ export function LanguageFilter() {
     return (
         <Autocomplete
             isClearable
+            className="max-w-sm"
             label="Filter by Language"
             placeholder="Select a language"
             onSelectionChange={(key) => setLanguageFilter(key)}
