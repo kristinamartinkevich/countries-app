@@ -19,9 +19,9 @@ export const fetchWeatherInfo = async (capital: string) => {
     }
 };
 
-export const fetchCountryInfo = async (codes: string) => {
+export const fetchCountryNames = async (codes: string) => {
     try {
-        const countryInfo = await axios.get(
+        const countryNames = await axios.get(
             `https://restcountries.com/v3.1/alpha?codes=${codes}`,
             {
                 headers: {
@@ -29,7 +29,7 @@ export const fetchCountryInfo = async (codes: string) => {
                 },
             }
         );
-        return countryInfo;
+        return countryNames.data;
     } catch (error) {
         toast.error(`Failed to fetch country names: ${error.message}`);
         console.error("Error fetching country names:", error);
@@ -40,11 +40,11 @@ export const fetchCountryInfo = async (codes: string) => {
 
 export const fetchCountryDetail = async (country: string) => {
     try {
-        const countryInfo = await axios.get(
+        const countryDetail = await axios.get(
             `https://restcountries.com/v3.1/name/${country}`,
         );
 
-        return countryInfo.data;
+        return countryDetail.data;
     } catch (error) {
         toast.error(`Failed to fetch country details: ${error.message}`);
         console.error("Error fetching country details:", error);

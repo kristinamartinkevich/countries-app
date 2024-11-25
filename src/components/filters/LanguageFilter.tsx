@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteItem, Select, SelectItem } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 
 import { useCountriesStore } from "@/store";
 

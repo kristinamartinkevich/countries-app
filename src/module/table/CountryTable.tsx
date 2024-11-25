@@ -9,10 +9,16 @@ import {
     useDisclosure,
 } from "@nextui-org/react";
 
-
 import { useCountriesStore } from "@/store";
 import ModalInfo from "../modal/Modalnfo";
 
+const columns = [
+    "Flag",
+    "Name",
+    "Capital",
+    "Region",
+    "Languages"
+];
 
 const CountryTable = () => {
     const {
@@ -22,7 +28,6 @@ const CountryTable = () => {
     } = useCountriesStore();
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
     const filteredCountries = getFilteredCountries();
 
     const openModal = (country) => {
@@ -30,37 +35,49 @@ const CountryTable = () => {
         onOpen();
     };
 
-    const reset = () => {
+    const resetModalState = () => {
         setSelectedCountry(null);
-        setCapitalInfo(null)
+        setCapitalInfo(null);
     };
 
+    const renderLanguages = (languages) =>
+        languages.map((lang) => lang.name).join(", ");
 
     return (
         <div>
-            <Table aria-label="Country Table" color="primary" selectionMode="single">
+            <Table
+                aria-label="Country Table"
+                color="primary"
+                selectionMode="single"
+            >
                 <TableHeader>
-                    <TableColumn>Flag</TableColumn>
-                    <TableColumn>Name</TableColumn>
-                    <TableColumn>Capital</TableColumn>
-                    <TableColumn>Region</TableColumn>
-                    <TableColumn>Languages</TableColumn>
+                    {columns.map((column) => (
+                        <TableColumn key={column}>{column}</TableColumn>
+                    ))}
                 </TableHeader>
                 <TableBody>
                     {filteredCountries.map((country, index) => (
-                        <TableRow key={index} onClick={() => openModal(country)}>
+                        <TableRow
+                            key={index}
+                            className="cursor-pointer hover:bg-violet-600 transition duration-200"
+                            onClick={() => openModal(country)}
+                        >
                             <TableCell>{country.emoji}</TableCell>
                             <TableCell>{country.name}</TableCell>
-                            <TableCell>{country.capital}</TableCell>
+                            <TableCell>{country.capital || "N/A"}</TableCell>
                             <TableCell>{country.continent.name}</TableCell>
-                            <TableCell>
-                                {country.languages.map((lang) => lang.name).join(", ")}
-                            </TableCell>
+                            <TableCell>{renderLanguages(country.languages)}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
-            <Modal isOpen={isOpen} size="5xl" onOpenChange={onOpenChange} onClose={reset}>
+
+            <Modal
+                isOpen={isOpen}
+                size="5xl"
+                onClose={resetModalState}
+                onOpenChange={onOpenChange}
+            >
                 <ModalInfo />
             </Modal>
         </div>
