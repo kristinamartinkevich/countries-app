@@ -12,11 +12,7 @@
 
 ## How to Use
 
-### Go to
-
-```bash
-https://cors-anywhere.herokuapp.com/corsdemo
-```
+### Go to [https://cors-anywhere.herokuapp.com/corsdemo](https://cors-anywhere.herokuapp.com/corsdemo)
 
 and press on "Request temporary access to the demo server"
 

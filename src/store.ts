@@ -2,7 +2,6 @@ import { create } from "zustand";
 
 interface CountriesStore {
     loading: boolean;
-    error: boolean;
     countries: any[];
     selectedCountry: string | null;
     neighbours: string[] | null;
@@ -12,7 +11,6 @@ interface CountriesStore {
     nameFilter: string | null;
     countryDetails: any | null;
     setLoading: (loading: boolean) => void;
-    setError: (error: boolean) => void;
     setCountries: (countries: any[]) => void;
     setSelectedCountry: (country: string | null) => void;
     setNeighbours: (neighbours: string[] | null) => void;
@@ -26,7 +24,6 @@ interface CountriesStore {
 
 export const useCountriesStore = create<CountriesStore>((set, get) => ({
     loading: false,
-    error: false,
     countries: [],
     selectedCountry: null,
     neighbours: null,
@@ -35,9 +32,7 @@ export const useCountriesStore = create<CountriesStore>((set, get) => ({
     languageFilter: null,
     nameFilter: null,
     countryDetails: null,
-
     setLoading: (loading) => set({ loading }),
-    setError: (error) => set({ error }),
     setCountries: (countries) => set({ countries }),
     setSelectedCountry: (country) => set({ selectedCountry: country }),
     setNeighbours: (neighbours) => set({ neighbours }),
