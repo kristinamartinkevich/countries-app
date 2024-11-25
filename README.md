@@ -17,6 +17,13 @@
 and press on "Request temporary access to the demo server"
 
 
+### Obtain OpenWeather API keys
+To create an API key for a free OpenWeather, follow these steps:
+
+1. **Step 1**: Sign in to OpenWeather or create a new account on OpenWeather’s registration page.
+2. **Step 2**: When registering for the first time, provide your email address and wait for a confirmation email from OpenWeather. The email will hold the API key linked to your free plan.
+
+
 ### Install dependencies
 
 
