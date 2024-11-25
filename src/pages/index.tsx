@@ -1,10 +1,11 @@
 import { LIST_COUNTRIES } from "@/graphql/queries";
 import DefaultLayout from "@/layouts/default";
-import CountryTable from "@/module/CountryTable";
-import Filters from "@/module/Filters";
+import CountryTable from "@/module/table/CountryTable";
+import Filters from "@/module/table/Filters";
 import { useCountriesStore } from "@/store";
 import { ApolloClient, InMemoryCache, useQuery } from "@apollo/client";
 import { Spinner } from "@nextui-org/react";
+import { Toaster } from "react-hot-toast";
 
 
 const client = new ApolloClient({
@@ -38,6 +39,7 @@ export default function IndexPage() {
     <DefaultLayout>
       <Filters />
       <CountryTable />
+      <Toaster />
     </DefaultLayout>
   );
 }

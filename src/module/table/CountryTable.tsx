@@ -1,6 +1,5 @@
 import {
     Table,
-    Spinner,
     TableHeader,
     TableColumn,
     TableCell,
@@ -10,15 +9,15 @@ import {
     useDisclosure,
 } from "@nextui-org/react";
 
-import ModalInfo from "./Modalnfo";
 
 import { useCountriesStore } from "@/store";
+import ModalInfo from "../modal/Modalnfo";
 
 
 const CountryTable = () => {
     const {
         setSelectedCountry,
-        setCapital,
+        setCapitalInfo,
         getFilteredCountries,
     } = useCountriesStore();
 
@@ -28,16 +27,21 @@ const CountryTable = () => {
 
     const openModal = (country) => {
         setSelectedCountry(country.name);
-        setCapital(country.capital);
         onOpen();
     };
 
+    const reset = () => {
+        setSelectedCountry(null);
+        setCapitalInfo(null)
+    };
+
+
     return (
         <div>
-            <Table aria-label="Country Table" color="primary">
+            <Table aria-label="Country Table" color="primary" selectionMode="single">
                 <TableHeader>
                     <TableColumn>Flag</TableColumn>
-                    <TableColumn allowsSorting>Name</TableColumn>
+                    <TableColumn>Name</TableColumn>
                     <TableColumn>Capital</TableColumn>
                     <TableColumn>Region</TableColumn>
                     <TableColumn>Languages</TableColumn>
@@ -56,7 +60,7 @@ const CountryTable = () => {
                     ))}
                 </TableBody>
             </Table>
-            <Modal isOpen={isOpen} size="lg" onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} size="5xl" onOpenChange={onOpenChange} onClose={reset}>
                 <ModalInfo />
             </Modal>
         </div>

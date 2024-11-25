@@ -1,5 +1,6 @@
 import {
     Image,
+    Spinner,
     Table,
     TableBody,
     TableCell,
@@ -7,14 +8,14 @@ import {
     TableHeader,
     TableRow,
 } from "@nextui-org/react";
-import axios from "axios";
 import { useEffect } from "react";
 
 import { useCountriesStore } from "@/store";
-import getCountryDetails from "@/hooks/getCountryDetail";
+import { fetchCountryDetail, fetchCountryInfo, fetchWeatherInfo } from "@/utils/apiService";
+import toast from "react-hot-toast";
 
 interface CountryDetailsProps {
-    country: Object;
+    country: string;
 }
 
 const columns = [
@@ -29,56 +30,37 @@ const columns = [
 ]
 
 const CountryDetails: React.FC<CountryDetailsProps> = ({ country }) => {
-    const { neighbours, setNeighbours, capitalInfo, setCapitalInfo } = useCountriesStore();
-
-    const countryDetails = getCountryDetails(country);
+    const { neighbours, setNeighbours, capitalInfo, setCapitalInfo, setCountryDetails, countryDetails } = useCountriesStore();
 
     useEffect(() => {
-        if (!countryDetails) return;
-        const getNeighbours = async () => {
+        const getInfo = async () => {
+            const details = await fetchCountryDetail(country);
+            setCountryDetails(details);
+
             if (countryDetails[0]?.borders?.length > 0) {
                 const borders = countryDetails[0]?.borders?.toString();
-                const countryNames = await axios.get(
-                    `https://restcountries.com/v3.1/alpha?codes=${borders}`,
-                    {
-                        headers: {
-                            "x-requested-with": "XMLHttpRequest",
-                        },
-                    },
-                );
+                const countryNames = await fetchCountryInfo(borders);
                 const borderingCountries = countryNames.data
                     .map((country) => country.name?.common)
                     .toString();
 
                 setNeighbours(borderingCountries);
             }
+            if (countryDetails[0].capital[0]) {
+                const capital = countryDetails[0].capital[0];
+                const weatherInfo = await fetchWeatherInfo(capital);
+                setCapitalInfo(weatherInfo.data);
+            }
         };
 
-        getNeighbours();
-    }, [countryDetails]);
-
-
-    useEffect(() => {
-        const getNeighbours = async () => {
-            const weatherInfo = await axios.get(
-                `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?q=${countryDetails[0].capital[0]}&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
-                {
-                    headers: {
-                        "x-requested-with": "XMLHttpRequest",
-                    },
-                },
-            );
-
-            setCapitalInfo(weatherInfo.data);
-        };
-
-        getNeighbours();
+        getInfo();
     }, []);
+
 
     return (
         <>
-            {countryDetails?.length >= 0 && capitalInfo && (
-                <Table>
+            {countryDetails?.length >= 0 && capitalInfo ? (
+                <Table aria-label="Country Details">
                     <TableHeader>
                         {columns.map((header, index) => (
                             <TableColumn key={index}>{header}</TableColumn>
@@ -87,17 +69,15 @@ const CountryDetails: React.FC<CountryDetailsProps> = ({ country }) => {
                     <TableBody>
                         <TableRow>
                             <TableCell>
-                                {Object.entries(countryDetails[0]?.languages).map(
-                                    ([key, value]) => (
-                                        <span key={key}>{value}</span>
-                                    ),
-                                )}
+                                {Object.entries(countryDetails[0]?.languages || {})
+                                    .map(([_, value]) => value)
+                                    .join(", ")}
                             </TableCell>
                             <TableCell>
                                 {Object.entries(countryDetails[0]?.currencies).map(
                                     ([code, { name }]) => (
                                         <span key={code}>{name}</span>
-                                    ),
+                                    )
                                 )}
                             </TableCell>
                             <TableCell>{countryDetails[0]?.population}</TableCell>
@@ -106,17 +86,19 @@ const CountryDetails: React.FC<CountryDetailsProps> = ({ country }) => {
                             <TableCell>{capitalInfo.name}</TableCell>
                             <TableCell>{capitalInfo.main.temp}</TableCell>
                             <TableCell>
-                                <Image
-                                    alt={capitalInfo.weather[0].main}
-                                    size="sm"
-                                    src={`https://openweathermap.org/img/wn/${capitalInfo.weather[0].icon}.png`}
-                                />
-                                {capitalInfo.weather[0].main}
+                                <div className="flex items-center">
+                                    <Image
+                                        alt={capitalInfo.weather[0].main}
+                                        size="lg"
+                                        src={`https://openweathermap.org/img/wn/${capitalInfo.weather[0].icon}.png`}
+                                    />
+                                    <span>{capitalInfo.weather[0].main}</span>
+                                </div>
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
-            )}
+            ) : <Spinner />}
         </>
     );
 };
